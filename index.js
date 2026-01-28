@@ -99,3 +99,13 @@ function getLearnerData(course, ag, submissions) {
 const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
 
 console.log(result);
+
+////////////////////////////////////////////////////////////////
+// The stuff above was in the provided sandbox. 
+
+//Okay so result is just what im supposed to make it look like in the end?
+
+//Do a valid check to the right course
+// create a function to do average
+
+
