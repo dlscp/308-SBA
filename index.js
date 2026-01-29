@@ -107,5 +107,63 @@ console.log(result);
 
 //Do a valid check to the right course
 // create a function to do average
+// create function to subtract points if due date is late
+// Want to run dateChecking first
+
+function getAvg(){
+
+}
+
+let validSubmissions = [];
 
 
+function dateChecking() {
+    // Creates an object of learner submissions that should be included in final result. Does this by checking submitted date
+    for (const idv_submission of LearnerSubmissions) {
+        
+        // creating variables for this block
+        let assignment_id = idv_submission.assignment_id;
+        let submitted_date = idv_submission.submission.submitted_at;
+        
+        // console.log(assignment_id,submitted_date)
+        
+            // Checking date
+            // Checks each assignment to see if it matches the assignment id of the submissions. If it does, it adds new property - submitted_status to the learner submission object that lets us know if it is late, not due or is valid for grading reports. Then if it valid or late, the submission object is added to validSubmissions.
+            // This would be good place to add error catching like if the assignment doesn't exist or if date isn't entered or if date doesn't exist and the like. 
+            for (const assignment of AssignmentGroup.assignments) {
+
+                // creating variables for this block only
+                let submitted_status = "Untracked";
+                let due_date = assignment.due_at;
+                // let idvSubStatus = idv_submission.submission.status;
+
+                if (assignment_id === assignment.id) {
+                    switch (true) {
+                        case (submitted_date > due_date ):
+                            submitted_status = "Late";
+                            break;
+                        case (submitted_date < due_date):
+                            submitted_status = "Not yet due";
+                            break;                
+                        default:
+                            submitted_status = "Valid";
+                            break;
+                    }
+                    // Adding property to learner submission object, only doing this if assignment id matches a learner submission id
+                    idv_submission.submission.status = submitted_status;
+
+
+                } 
+            }
+            // console.log(idv_submission)
+            if (idv_submission.submission.status === "Valid" || idv_submission.submission.status === "Late") {
+                validSubmissions.push(idv_submission);
+                console.log(idv_submission.submission.status,"late or valid test")
+            }
+            // Could add function here to handle score adjustments for late
+    }
+    return validSubmissions;
+}
+
+dateChecking();
+console.log(validSubmissions);
