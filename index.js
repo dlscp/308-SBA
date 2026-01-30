@@ -141,6 +141,8 @@ function dateChecking() {
                     switch (true) {
                         case (submitted_date > due_date ):
                             submitted_status = "Late";
+                            // subtracting 10% of possible points if late 
+                            idv_submission.submission.score = idv_submission.submission.score - (assignment.points_possible*.1);
                             break;
                         case (submitted_date < due_date):
                             submitted_status = "Not yet due";
@@ -151,6 +153,7 @@ function dateChecking() {
                     }
                     // Adding property to learner submission object, only doing this if assignment id matches a learner submission id
                     idv_submission.submission.status = submitted_status;
+                    idv_submission.submission.percentage = (idv_submission.submission.score/assignment.points_possible)
 
 
                 } 
@@ -160,10 +163,26 @@ function dateChecking() {
                 validSubmissions.push(idv_submission);
                 console.log(idv_submission.submission.status,"late or valid test")
             }
-            // Could add function here to handle score adjustments for late
+            
     }
     return validSubmissions;
 }
 
 dateChecking();
 console.log(validSubmissions);
+
+function finalResult() {
+
+    const finalResult = [];
+
+    //Need to add checking for if learner id's match
+    for (const learnerSubs of validSubmissions) {
+        finalResult.id = learnerSubs.learner_id;
+    }
+
+    console.log(finalResult)
+}
+
+finalResult();
+
+
